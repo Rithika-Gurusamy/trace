@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | Academia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .profile-form-container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .readonly input,
+        .readonly select {
+            background: transparent;
+            border: 1px solid transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+            color: var(--text-dim);
+        }
+
+        .action-bar {
+            position: sticky;
+            top: 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            z-index: 100;
+            border: 1px solid var(--glass-border);
+        }
+
+        .badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-new {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid #22c55e;
+        }
+
+        .badge-view {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            border: 1px solid #6366f1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body style="display: block;">
+    <div class="profile-form-container animate-fade">
+        <div class="action-bar">
+            <div>
+                <h2 id="pageTitle" style="margin: 0;">Student Profile</h2>
+                <div id="modeBadge" class="badge">View Mode</div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-outline" style="width: auto; margin: 0;"
+                    onclick="window.location.href='dashboard.html'">Back</button>
+                <button id="editBtn" class="btn btn-primary" style="width: auto; margin: 0;" onclick="enableEdit()">Edit
+                    Profile</button>
+                <button id="saveBtn" class="btn btn-primary hidden" style="width: auto; margin: 0; background: #22c55e;"
+                    onclick="saveProfile()">Save Profile</button>
+            </div>
+        </div>
+
+        <form id="profileForm" class="readonly">
+            <div class="profile-grid">
+                <h3 class="section-title">Personal Information</h3>
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Register Number *</label>
+                    <input type="text" id="register_no" required>
+                </div>
+                <div class="form-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="roll_no">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="text" id="mobile_no">
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    <input type="date" id="date_of_birth">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="gender">
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Scholar Type</label>
+                    <select id="scholar_type">
+                        <option value="">Select</option>
+                        <option value="Day Scholar">Day Scholar</option>
+                        <option value="Hosteller">Hosteller</option>
+                    </select>
+                </div>
+
+                <h3 class="section-title">Community & Parent Details</h3>
+                <div class="form-group">
+                    <label>Community</label>
+                    <input type="text" id="community" placeholder="BC, MBC, SC, etc.">
+                </div>
+                <div class="form-group">
+                    <label>Caste</label>
+                    <input type="text" id="caste">
+                </div>
+                <div class="form-group">
+                    <label>Father's Name</label>
+                    <input type="text" id="father_name">
+                </div>
+                <div class="form-group">
+                    <label>Father's Mobile</label>
+                    <input type="text" id="father_mobile_no">
+                </div>
+                <div class="form-group">
+                    <label>Mother's Name</label>
+                    <input type="text" id="mother_name">
+                </div>
+                <div class="form-group">
+                    <label>Mother's Mobile</label>
+                    <input type="text" id="mother_mobile_no">
+                </div>
+
+                <h3 class="section-title">Academic Records</h3>
+                <div class="form-group">
+                    <label>HSLC Total Marks</label>
+                    <input type="text" id="hslc_total_marks">
+                </div>
+                <div class="form-group">
+                    <label>HSLC Percentage</label>
+                    <input type="text" id="hslc_percentage">
+                </div>
+                <div class="form-group">
+                    <label>HSLC Cutoff</label>
+                    <input type="text" id="hslc_cutoff_marks">
+                </div>
+                <div class="form-group">
+                    <label>SSLC Total Marks</label>
+                    <input type="text" id="sslc_total_marks">
+                </div>
+                <div class="form-group">
+                    <label>SSLC Percentage</label>
+                    <input type="text" id="sslc_percentage">
+                </div>
+
+                <h3 class="section-title">Identity & Government IDs</h3>
+                <div class="form-group">
+                    <label>Residential Address</label>
+                    <input type="text" id="residential_address">
+                </div>
+                <div class="form-group">
+                    <label>Blood Group</label>
+                    <input type="text" id="blood_group">
+                </div>
+                <div class="form-group">
+                    <label>Aadhar Number</label>
+                    <input type="text" id="aadhar_number">
+                </div>
+                <div class="form-group">
+                    <label>EMIS Number</label>
+                    <input type="text" id="emis_number">
+                </div>
+                <div class="form-group">
+                    <label>UMIS Number</label>
+                    <input type="text" id="umis_number">
+                </div>
+
+                <h3 class="section-title">Scholarships & Benefits</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="first_graduate">
+                    <label for="first_graduate">First Graduate</label>
+                </div>
+                <div class="form-group">
+                    <label>FG Certificate Number</label>
+                    <input type="text" id="first_graduate_certificate_number">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="pudhumai_pen">
+                    <label for="pudhumai_pen">Pudhumai Pen</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="sc_st_scholarship">
+                    <label for="sc_st_scholarship">SC/ST Scholarship</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="pmss_scholarship">
+                    <label for="pmss_scholarship">PMSS Scholarship</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="category_7_5_scholarship">
+                    <label for="category_7_5_scholarship">7.5 Reservation</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="mudhalvan_scholarship">
+                    <label for="mudhalvan_scholarship">Naan Mudhalvan</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="other_scholarship">
+                    <label for="other_scholarship">Other Scholarship</label>
+                </div>
+                <div class="form-group">
+                    <label>Scholarship Name</label>
+                    <input type="text" id="other_scholarship_name">
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000";
+        const urlParams = new URLSearchParams(window.location.search);
+        const regNo = urlParams.get('reg');
+        const mode = urlParams.get('mode'); // 'create' or null
+
+        window.onload = async () => {
+            if (regNo) document.getElementById('register_no').value = regNo;
+
+            if (mode === 'create') {
+                enableEdit();
+                document.getElementById('modeBadge').innerText = "Create Mode";
+                document.getElementById('modeBadge').className = "badge badge-new";
+                document.getElementById('editBtn').classList.add('hidden');
+            } else {
+                await loadProfile();
+            }
+        };
+
+        async function loadProfile() {
+            try {
+                const response = await fetch(`${API_URL}/student/profile/${regNo}`);
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Fill text/select fields
+                    Object.keys(data).forEach(key => {
+                        const el = document.getElementById(key);
+                        if (el) {
+                            if (el.type === 'checkbox') {
+                                el.checked = data[key];
+                            } else {
+                                el.value = data[key] || "";
+                            }
+                        }
+                    });
+
+                    document.getElementById('modeBadge').innerText = "View Mode";
+                    document.getElementById('modeBadge').className = "badge badge-view";
+                }
+            } catch (err) {
+                console.error("Error loading profile", err);
+            }
+        }
+
+        function enableEdit() {
+            document.getElementById('profileForm').classList.remove('readonly');
+            document.getElementById('editBtn').classList.add('hidden');
+            document.getElementById('saveBtn').classList.remove('hidden');
+            document.getElementById('modeBadge').innerText = "Edit Mode";
+            document.getElementById('register_no').style.pointerEvents = 'none'; // Lock register number
+        }
+
+        async function saveProfile() {
+            const form = document.getElementById('profileForm');
+            const formData = {};
+
+            // Collect data from all inputs
+            form.querySelectorAll('input, select').forEach(el => {
+                if (el.id) {
+                    if (el.type === 'checkbox') {
+                        formData[el.id] = el.checked;
+                    } else if (el.value !== "") {
+                        formData[el.id] = el.value;
+                    }
+                }
+            });
+
+            const method = (mode === 'create') ? 'POST' : 'PUT';
+            const endpoint = (mode === 'create') ? `${API_URL}/student/profile` : `${API_URL}/student/profile/${regNo}`;
+
+            // Build query params for simplicity as per current backend structure
+            const queryParams = new URLSearchParams(formData).toString();
+
+            try {
+                const response = await fetch(`${endpoint}?${queryParams}`, {
+                    method: method
+                });
+
+                if (response.ok) {
+                    alert("Profile saved successfully!");
+                    window.location.href = `profile.html?reg=${formData.register_no}`;
+                } else {
+                    const err = await response.json();
+                    alert("Error saving: " + JSON.stringify(err.detail));
+                }
+            } catch (err) {
+                alert("Server error connecting to backend");
+            }
+        }
+    </script>
+</body>
+
+</html>
